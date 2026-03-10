@@ -48,7 +48,7 @@ export default function CloneFlowProjectPage() {
           <p className="text-xs uppercase tracking-[0.22em] text-neutral-500">Access</p>
           <p className="mt-3 text-sm leading-6 text-neutral-700">
             CloneFlow remains a separate standalone repo, but the live app is also available directly. Visitors can
-            open the deployed site, inspect the codebase, or review the deployment notes from here.
+            open the deployed site or inspect the codebase from here.
           </p>
           <div className="mt-6 flex flex-col gap-3">
             <a
@@ -66,14 +66,6 @@ export default function CloneFlowProjectPage() {
               className="rounded-full border border-neutral-900 bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-neutral-800"
             >
               Open GitHub Repository
-            </a>
-            <a
-              href={`${repoUrl}#readme`}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border border-neutral-300 bg-white px-4 py-2 text-sm font-medium text-neutral-900 transition hover:bg-neutral-50"
-            >
-              Read Deployment Notes
             </a>
           </div>
         </div>
