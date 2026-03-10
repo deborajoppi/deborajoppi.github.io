@@ -1,5 +1,5 @@
 1:"$Sreact.fragment"
-2:I[97367,["/deborajoppi.github.io/_next/static/chunks/ff1a16fafef87110.js","/deborajoppi.github.io/_next/static/chunks/247eb132b7f7b574.js"],"OutletBoundary"]
+2:I[97367,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/d2be314c3ece3fbe.js"],"OutletBoundary"]
 3:"$Sreact.suspense"
-0:{"buildId":"QVjEXd6GtHOjXglYNFA_j","rsc":["$","$1","c",{"children":[["$","div",null,{"children":"Projects WIP"}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"e_E9TUu05MA0wd-A_TDiL","rsc":["$","$1","c",{"children":[["$","div",null,{"children":"Projects WIP"}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
 4:null
