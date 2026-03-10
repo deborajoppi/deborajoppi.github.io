@@ -10,12 +10,12 @@ const projects = [
     external: false,
   },
   {
-    href: "https://github.com/deborajoppi/CloneFlow",
-    title: "CodeFlow",
+    href: "/science/projects/cloneflow",
+    title: "CloneFlow",
     summary:
-      "A separate Next.js project for molecular cloning workflow design and planning, built as its own standalone repository.",
-    status: "GitHub",
-    external: true,
+      "A local-first molecular cloning planning app with config-driven workflow logic, kept in its own standalone repository.",
+    status: "External Repo",
+    external: false,
   },
 ];
 
@@ -45,7 +45,6 @@ function ProjectCard({
   title,
   summary,
   status,
-  external,
 }: {
   href: string;
   title: string;
@@ -65,19 +64,9 @@ function ProjectCard({
         </span>
       </div>
       <p className="mt-4 text-sm leading-6 text-neutral-700">{summary}</p>
-      <p className="mt-5 text-sm font-medium text-neutral-900 group-hover:underline">
-        {external ? "Open repository" : "Open project"}
-      </p>
+      <p className="mt-5 text-sm font-medium text-neutral-900 group-hover:underline">Open project</p>
     </>
   );
-
-  if (external) {
-    return (
-      <a href={href} target="_blank" rel="noreferrer" className={className}>
-        {content}
-      </a>
-    );
-  }
 
   return (
     <Link href={href} className={className}>
