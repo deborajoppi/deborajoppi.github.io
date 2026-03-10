@@ -43,14 +43,6 @@ export default function Home() {
           Tip: press <kbd className="px-1 py-0.5 border rounded">S</kbd> to jump.
         </motion.p>
 
-        <motion.p variants={item} className="mt-4 text-xs md:text-sm text-neutral-500 text-center">
-          Other internal tools live at{" "}
-          <Link href="/tools" className="underline underline-offset-4 hover:text-neutral-800">
-            /tools
-          </Link>
-          .
-        </motion.p>
-
         {/* Footer */}
         <motion.footer variants={item} className="mt-10 text-xs md:text-sm text-neutral-600 text-center">
           © {new Date().getFullYear()} Débora Joppi.
