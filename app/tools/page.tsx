@@ -34,13 +34,12 @@ export default function ToolsPage() {
           </p>
         </motion.header>
 
-        <motion.div variants={item} className="grid w-full max-w-5xl grid-cols-1 md:grid-cols-2 gap-6">
-          <SelectorCard href="/stats" label="stats" bg="bg-[#f4e9c5]" ring="ring-[#c5a868]" />
+        <motion.div variants={item} className="grid w-full max-w-3xl grid-cols-1 gap-6">
           <SelectorCard href="/finance" label="finance" bg="bg-[#d9e7fb]" ring="ring-[#7d9ecf]" />
         </motion.div>
 
         <motion.p variants={item} className="mt-10 text-xs md:text-sm text-neutral-600 text-center">
-          Tip: press <kbd className="px-1 py-0.5 border rounded">G</kbd> or <kbd className="px-1 py-0.5 border rounded">F</kbd> to jump.
+          Tip: press <kbd className="px-1 py-0.5 border rounded">F</kbd> to jump.
         </motion.p>
       </motion.main>
 
@@ -75,7 +74,6 @@ function ToolShortcuts() {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const key = e.key?.toLowerCase();
-      if (key === "g") window.location.href = "/stats";
       if (key === "f") window.location.href = "/finance";
     };
     window.addEventListener("keydown", handler);
