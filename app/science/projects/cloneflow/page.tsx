@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 const repoUrl = "https://github.com/deborajoppi/CloneFlow";
+const liveUrl = "https://clone-flow.vercel.app";
 
 const capabilities = [
   "Config-driven cloning logic with editable workflow and vector rule files",
@@ -44,12 +45,20 @@ export default function CloneFlowProjectPage() {
         </div>
 
         <div className="rounded-3xl border border-neutral-200 bg-[#f6f1e7] p-6 shadow-sm">
-          <p className="text-xs uppercase tracking-[0.22em] text-neutral-500">Repository</p>
+          <p className="text-xs uppercase tracking-[0.22em] text-neutral-500">Access</p>
           <p className="mt-3 text-sm leading-6 text-neutral-700">
-            CloneFlow remains a separate standalone repo. Visitors can discover it from this site, then jump out to the
-            codebase directly.
+            CloneFlow remains a separate standalone repo, but the live app is also available directly. Visitors can
+            open the deployed site, inspect the codebase, or review the deployment notes from here.
           </p>
           <div className="mt-6 flex flex-col gap-3">
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full border border-[#7AA69A] bg-[#7AA69A] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
+            >
+              Open Live App
+            </a>
             <a
               href={repoUrl}
               target="_blank"
