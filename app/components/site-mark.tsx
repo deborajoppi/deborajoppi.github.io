@@ -7,30 +7,23 @@ export default function SiteMark({ className = "h-9 w-9" }: { className?: string
       className={className}
       aria-hidden="true"
     >
-      <rect x="4" y="4" width="56" height="56" rx="18" fill="#F6F1E7" />
-      <rect x="4" y="4" width="56" height="56" rx="18" stroke="#1A1A1A" strokeWidth="2.5" />
+      <circle cx="32" cy="32" r="28" fill="#F6F1E7" />
+      <circle cx="32" cy="32" r="28" stroke="#1A1A1A" strokeWidth="2.25" />
       <path
-        d="M21 18H31.5C39.5 18 45 23.1 45 31C45 38.9 39.5 44 31.5 44H21V18Z"
+        d="M21 17V47H30.5C38.4 47 43.5 41.7 43.5 32C43.5 22.3 38.4 17 30.5 17H21Z"
         stroke="#1A1A1A"
-        strokeWidth="4"
+        strokeWidth="3.75"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
-        d="M29 24H31.5C35.7 24 38.5 26.7 38.5 31C38.5 35.3 35.7 38 31.5 38H29"
+        d="M42 18V38.5C42 44.8 38.5 48 33 48C29.8 48 27.1 46.9 24.8 44.7"
         stroke="#7AA69A"
-        strokeWidth="4"
+        strokeWidth="3.75"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path
-        d="M44 20V39C44 45.1 40.1 49 34 49C30.7 49 28 47.9 25.7 45.4"
-        stroke="#1A1A1A"
-        strokeWidth="4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <circle cx="45" cy="16.5" r="3.5" fill="#7AA69A" />
+      <path d="M38 18H46" stroke="#7AA69A" strokeWidth="3.75" strokeLinecap="round" />
     </svg>
   );
 }
