@@ -3,6 +3,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Suspense } from "react";
+import SiteMark from "@/app/components/site-mark";
 import NavTabs from "./nav-tabs"; // client component
 
 export const metadata: Metadata = {
@@ -16,7 +17,10 @@ export default function ScienceLayout({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-neutral-200">
         <div className="mx-auto max-w-5xl px-4 py-3">
           <div className="flex items-center justify-between">
-            <a href="/" className="font-semibold tracking-tight">Débora Joppi</a>
+            <a href="/" className="inline-flex items-center gap-3 font-semibold tracking-tight">
+              <SiteMark className="h-9 w-9 shrink-0" />
+              <span>Débora Joppi</span>
+            </a>
           </div>
           <Suspense fallback={null}>
             <NavTabs />
