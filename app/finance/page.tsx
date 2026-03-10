@@ -427,8 +427,8 @@ export default function FinancePage() {
       <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-4">
           <div>
-            <Link href="/" className="text-sm font-medium text-slate-600 hover:text-slate-900">
-              ← Home
+            <Link href="/tools" className="text-sm font-medium text-slate-600 hover:text-slate-900">
+              ← Tools
             </Link>
             <h1 className="mt-1 text-xl font-semibold">Personal Finance Dashboard</h1>
           </div>

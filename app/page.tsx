@@ -34,15 +34,21 @@ export default function Home() {
         </motion.header>
 
         {/* Cards */}
-        <motion.div variants={item} className="grid w-full max-w-5xl grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div variants={item} className="grid w-full max-w-3xl grid-cols-1 gap-6">
           <SelectorCard href="/science" label="science" bg="bg-[#cfe7de]" ring="ring-[#7aa69a]" />
-          <SelectorCard href="/stats" label="stats" bg="bg-[#f4e9c5]" ring="ring-[#c5a868]" />
-          <SelectorCard href="/finance" label="finance" bg="bg-[#d9e7fb]" ring="ring-[#7d9ecf]" />
         </motion.div>
 
         {/* Tip */}
         <motion.p variants={item} className="mt-10 text-xs md:text-sm text-neutral-600 text-center">
-          Tip: press <kbd className="px-1 py-0.5 border rounded">S</kbd>, <kbd className="px-1 py-0.5 border rounded">G</kbd>, or <kbd className="px-1 py-0.5 border rounded">F</kbd> to jump.
+          Tip: press <kbd className="px-1 py-0.5 border rounded">S</kbd> to jump.
+        </motion.p>
+
+        <motion.p variants={item} className="mt-4 text-xs md:text-sm text-neutral-500 text-center">
+          Other internal tools live at{" "}
+          <Link href="/tools" className="underline underline-offset-4 hover:text-neutral-800">
+            /tools
+          </Link>
+          .
         </motion.p>
 
         {/* Footer */}
@@ -84,8 +90,6 @@ function KeyShortcuts() {
     const handler = (e: KeyboardEvent) => {
       const key = e.key?.toLowerCase();
       if (key === "s") window.location.href = "/science";
-      if (key === "g") window.location.href = "/stats";
-      if (key === "f") window.location.href = "/finance";
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
