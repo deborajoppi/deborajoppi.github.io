@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const tabs = [
-  { href: "/science", label: "About" },
+  { href: "/", label: "About" },
   { href: "/science/research", label: "Research" },
   { href: "/science/publications", label: "Publications" },
   { href: "/science/projects", label: "Projects" },
@@ -16,7 +16,10 @@ export default function NavTabs() {
   return (
     <nav className="mt-3 flex flex-wrap gap-3 text-sm">
       {tabs.map((t) => {
-        const active = pathname === t.href || pathname.startsWith(t.href + "/");
+        const active =
+          t.href === "/"
+            ? pathname === "/" || pathname === "/science"
+            : pathname === t.href || pathname.startsWith(t.href + "/");
         return (
           <Link
             key={t.label}
