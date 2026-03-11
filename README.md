@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# deborajoppi.github.io
 
-## Getting Started
+Personal website for Débora Joppi, built with Next.js and deployed to GitHub Pages.
 
-First, run the development server:
+Live site:
+- `https://deborajoppi.github.io`
+
+## What is in this repo
+
+The homepage now opens directly into the science section with tabbed navigation.
+
+Main sections:
+- `/` - About page with the shared science navigation shell
+- `/science/research` - research overview
+- `/science/publications` - publications and manuscripts
+- `/science/projects` - project index
+- `/science/projects/stats` - browser-based stats tool
+- `/science/projects/cloneflow` - website project page for CloneFlow, with links to the live app and repo
+- `/finance` - client-side personal finance dashboard
+- `/tools` - utility landing page for non-homepage tools
+
+Key components:
+- `app/components/science-shell.tsx` - shared top-level shell for the tabbed science view
+- `app/components/site-mark.tsx` - header monogram/logo
+- `app/components/stats-lab.tsx` - stats project UI
+
+## Local development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open:
+- `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+This repo is configured for static export through Next.js, so production output is written to `out/`.
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Primary deployment path:
+- push to `main`
+- GitHub Actions runs `.github/workflows/pages.yml`
+- the workflow builds `out/` and deploys it to GitHub Pages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+GitHub Pages settings:
+- `Settings -> Pages`
+- source: `GitHub Actions`
 
-## Deploy on Vercel
+Manual export snapshot:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run build
+npm run deploy
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+That moves `out/` into `docs/`. The live Pages deployment, however, is driven by GitHub Actions from source, not by manually committing `docs/`.
+
+## Related project links
+
+CloneFlow is maintained as a separate repo and app:
+- Repo: `https://github.com/deborajoppi/CloneFlow`
+- Live app: `https://clone-flow.vercel.app`
