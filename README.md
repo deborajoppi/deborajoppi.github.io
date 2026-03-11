@@ -16,7 +16,6 @@ Main sections:
 - `/science/projects` - project index
 - `/science/projects/stats` - browser-based stats tool
 - `/science/projects/cloneflow` - website project page for CloneFlow, with links to the live app and repo
-- `/finance` - client-side personal finance dashboard
 - `/tools` - utility landing page for non-homepage tools
 
 Key components:
