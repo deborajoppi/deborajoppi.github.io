@@ -118,6 +118,80 @@ export const siteCopy = {
       backProjects: "Back Projects",
       backScience: "Back Science",
     },
+    statsTool: {
+      eyebrow: "Data + Stats",
+      title: "Prism-like Analysis Studio",
+      intro:
+        "Paste CSV/TSV data, compute statistical tests, and visualize results with multiple chart styles. Grouped mode uses column-wise groups (like Prism column tables). XY mode supports correlation, linear regression, and fitted scatter plots.",
+      dataInput: "Data Input",
+      grouped: "Grouped",
+      xy: "XY",
+      loadSample: "Load Sample",
+      firstRowHeader: "First row is header",
+      parsed: "Parsed",
+      rows: "rows",
+      columns: "columns",
+      parseFailed: "Could not parse this table.",
+      xColumn: "X Column",
+      yColumn: "Y Column",
+      statsCharts: "Statistics + Charts",
+      descriptiveStats: "Descriptive Statistics",
+      welch: "Welch t-test (two-tailed)",
+      oneWayAnova: "One-way ANOVA",
+      needGroups: "Need at least 2 groups for inferential statistics.",
+      nPairs: "N pairs",
+      meanX: "Mean X",
+      meanY: "Mean Y",
+      sdX: "SD X",
+      sdY: "SD Y",
+      pearsonR: "Pearson r",
+      rSquared: "R squared",
+      linearFit: "Linear fit",
+      correlationP: "Correlation p",
+      notEnoughPoints: "Not enough points",
+      correlationHelp: "Pearson correlation p-value is computed from the t statistic with df = n - 2.",
+      group: "Group",
+      n: "n",
+      mean: "Mean",
+      median: "Median",
+      sd: "SD",
+      sem: "SEM",
+      ci95: "95% CI",
+      value: "Value",
+      couldNotParseInput: "Could not parse your input. Use comma, tab, or semicolon delimiters.",
+      noNumericData: "No numeric data found. In grouped mode, each column is interpreted as one group.",
+      needTwoRows: "Need at least two valid (x, y) rows for XY analysis.",
+      noDataRowsAfterHeader: "No data rows after header.",
+      delimiterTab: "tab",
+      delimiterComma: "comma",
+      delimiterSemicolon: "semicolon",
+      chartOptionsGrouped: {
+        bar: "Bar + SEM",
+        box: "Box Plot",
+        strip: "Strip Plot",
+        meanLine: "Mean Line",
+      },
+      chartOptionsXY: {
+        scatter: "Scatter + Fit",
+        line: "Line",
+      },
+      sampleGrouped: `Control,Treatment A,Treatment B
+9.8,11.2,13.6
+10.5,10.9,14.2
+9.9,11.7,13.1
+10.1,12.0,13.7
+10.7,11.5,14.5
+9.6,11.9,13.9`,
+      sampleXY: `Dose,Response
+0,3.1
+1,4.0
+2,5.1
+3,6.4
+4,7.5
+5,8.4
+6,9.1`,
+      columnLabel: "Column",
+    },
   },
   pt: {
     shell: {
@@ -235,6 +309,80 @@ export const siteCopy = {
     stats: {
       backProjects: "Voltar Projetos",
       backScience: "Voltar Ciencia",
+    },
+    statsTool: {
+      eyebrow: "Dados + Estatistica",
+      title: "Studio de Analise estilo Prism",
+      intro:
+        "Cole dados CSV/TSV, calcule testes estatisticos e visualize resultados com varios estilos de grafico. O modo agrupado usa colunas como grupos (como nas tabelas de colunas do Prism). O modo XY suporta correlacao, regressao linear e graficos de dispersao com ajuste.",
+      dataInput: "Entrada de dados",
+      grouped: "Agrupado",
+      xy: "XY",
+      loadSample: "Carregar exemplo",
+      firstRowHeader: "Primeira linha e cabecalho",
+      parsed: "Interpretado",
+      rows: "linhas",
+      columns: "colunas",
+      parseFailed: "Nao foi possivel interpretar esta tabela.",
+      xColumn: "Coluna X",
+      yColumn: "Coluna Y",
+      statsCharts: "Estatistica + Graficos",
+      descriptiveStats: "Estatisticas descritivas",
+      welch: "Teste t de Welch (bicaudal)",
+      oneWayAnova: "ANOVA de uma via",
+      needGroups: "Sao necessarios pelo menos 2 grupos para estatistica inferencial.",
+      nPairs: "N pares",
+      meanX: "Media X",
+      meanY: "Media Y",
+      sdX: "DP X",
+      sdY: "DP Y",
+      pearsonR: "Pearson r",
+      rSquared: "R ao quadrado",
+      linearFit: "Ajuste linear",
+      correlationP: "p da correlacao",
+      notEnoughPoints: "Pontos insuficientes",
+      correlationHelp: "O p-valor da correlacao de Pearson e calculado a partir da estatistica t com gl = n - 2.",
+      group: "Grupo",
+      n: "n",
+      mean: "Media",
+      median: "Mediana",
+      sd: "DP",
+      sem: "EPM",
+      ci95: "IC 95%",
+      value: "Valor",
+      couldNotParseInput: "Nao foi possivel interpretar sua entrada. Use delimitadores por virgula, tabulacao ou ponto e virgula.",
+      noNumericData: "Nenhum dado numerico encontrado. No modo agrupado, cada coluna e interpretada como um grupo.",
+      needTwoRows: "Sao necessarias pelo menos duas linhas XY validas para a analise.",
+      noDataRowsAfterHeader: "Nao ha linhas de dados apos o cabecalho.",
+      delimiterTab: "tabulacao",
+      delimiterComma: "virgula",
+      delimiterSemicolon: "ponto e virgula",
+      chartOptionsGrouped: {
+        bar: "Barras + EPM",
+        box: "Box Plot",
+        strip: "Strip Plot",
+        meanLine: "Linha da media",
+      },
+      chartOptionsXY: {
+        scatter: "Dispersao + ajuste",
+        line: "Linha",
+      },
+      sampleGrouped: `Controle,Tratamento A,Tratamento B
+9.8,11.2,13.6
+10.5,10.9,14.2
+9.9,11.7,13.1
+10.1,12.0,13.7
+10.7,11.5,14.5
+9.6,11.9,13.9`,
+      sampleXY: `Dose,Resposta
+0,3.1
+1,4.0
+2,5.1
+3,6.4
+4,7.5
+5,8.4
+6,9.1`,
+      columnLabel: "Coluna",
     },
   },
 } as const;

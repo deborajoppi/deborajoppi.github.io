@@ -1,5 +1,7 @@
 "use client";
 
+import { useLanguage } from "@/app/components/language-provider";
+import { getCopy } from "@/app/lib/site-copy";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -66,35 +68,6 @@ type XYSummary = {
   pValue: number | null;
 };
 
-const sampleGrouped = `Control,Treatment A,Treatment B
-9.8,11.2,13.6
-10.5,10.9,14.2
-9.9,11.7,13.1
-10.1,12.0,13.7
-10.7,11.5,14.5
-9.6,11.9,13.9`;
-
-const sampleXY = `Dose,Response
-0,3.1
-1,4.0
-2,5.1
-3,6.4
-4,7.5
-5,8.4
-6,9.1`;
-
-const groupedChartOptions: { value: GroupChartType; label: string }[] = [
-  { value: "bar", label: "Bar + SEM" },
-  { value: "box", label: "Box Plot" },
-  { value: "strip", label: "Strip Plot" },
-  { value: "mean-line", label: "Mean Line" },
-];
-
-const xyChartOptions: { value: XYChartType; label: string }[] = [
-  { value: "scatter", label: "Scatter + Fit" },
-  { value: "line", label: "Line" },
-];
-
 export default function StatsLabPage({
   backHref = "/",
   backLabel = "Back Home",
@@ -102,21 +75,33 @@ export default function StatsLabPage({
   backHref?: string;
   backLabel?: string;
 } = {}) {
+  const { language } = useLanguage();
+  const copy = getCopy(language).statsTool;
   const [mode, setMode] = useState<InputMode>("grouped");
   const [hasHeader, setHasHeader] = useState(true);
-  const [input, setInput] = useState(sampleGrouped);
+  const [input, setInput] = useState<string>(copy.sampleGrouped);
   const [groupChart, setGroupChart] = useState<GroupChartType>("bar");
   const [xyChart, setXYChart] = useState<XYChartType>("scatter");
   const [xColumn, setXColumn] = useState(0);
   const [yColumn, setYColumn] = useState(1);
+  const groupedChartOptions: { value: GroupChartType; label: string }[] = [
+    { value: "bar", label: copy.chartOptionsGrouped.bar },
+    { value: "box", label: copy.chartOptionsGrouped.box },
+    { value: "strip", label: copy.chartOptionsGrouped.strip },
+    { value: "mean-line", label: copy.chartOptionsGrouped.meanLine },
+  ];
+  const xyChartOptions: { value: XYChartType; label: string }[] = [
+    { value: "scatter", label: copy.chartOptionsXY.scatter },
+    { value: "line", label: copy.chartOptionsXY.line },
+  ];
 
   const parsed = useMemo(() => {
     try {
-      return parseDelimitedTable(input, hasHeader);
+      return parseDelimitedTable(input, hasHeader, copy.columnLabel, copy.noDataRowsAfterHeader);
     } catch {
       return null;
     }
-  }, [input, hasHeader]);
+  }, [copy.columnLabel, copy.noDataRowsAfterHeader, hasHeader, input]);
 
   useEffect(() => {
     if (!parsed) {
@@ -172,19 +157,19 @@ export default function StatsLabPage({
 
   const modeError = useMemo(() => {
     if (!parsed) {
-      return "Could not parse your input. Use comma, tab, or semicolon delimiters.";
+      return copy.couldNotParseInput;
     }
 
     if (mode === "grouped" && groupedData.length === 0) {
-      return "No numeric data found. In grouped mode, each column is interpreted as one group.";
+      return copy.noNumericData;
     }
 
     if (mode === "xy" && xyPoints.length < 2) {
-      return "Need at least two valid (x, y) rows for XY analysis.";
+      return copy.needTwoRows;
     }
 
     return null;
-  }, [groupedData.length, mode, parsed, xyPoints.length]);
+  }, [copy.couldNotParseInput, copy.needTwoRows, copy.noNumericData, groupedData.length, mode, parsed, xyPoints.length]);
 
   return (
     <div className="min-h-screen bg-[radial-gradient(1400px_900px_at_10%_-10%,#f9f0d4_0%,#f8efe2_38%,#efe6da_100%)] text-[#1b2428]">
@@ -195,11 +180,11 @@ export default function StatsLabPage({
           transition={{ duration: 0.35 }}
           className="mb-6 flex flex-col gap-4 rounded-3xl border border-[#1b2428]/15 bg-[#fffdfa]/85 p-5 shadow-[0_12px_30px_-18px_rgba(10,20,30,0.35)] backdrop-blur"
         >
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <p className="text-xs uppercase tracking-[0.22em] text-[#51616a]">Data + Stats</p>
+            <div className="flex items-center justify-between gap-4">
+              <div>
+              <p className="text-xs uppercase tracking-[0.22em] text-[#51616a]">{copy.eyebrow}</p>
               <h1 className="font-[Iowan_Old_Style,Palatino,serif] text-3xl sm:text-4xl leading-tight text-[#102129]">
-                Prism-like Analysis Studio
+                {copy.title}
               </h1>
             </div>
             <Link
@@ -210,9 +195,7 @@ export default function StatsLabPage({
             </Link>
           </div>
           <p className="max-w-3xl text-sm leading-6 text-[#34444d]">
-            Paste CSV/TSV data, compute statistical tests, and visualize results with multiple chart styles.
-            Grouped mode uses column-wise groups (like Prism column tables). XY mode supports correlation,
-            linear regression, and fitted scatter plots.
+            {copy.intro}
           </p>
         </motion.header>
 
@@ -223,17 +206,17 @@ export default function StatsLabPage({
             transition={{ duration: 0.35, delay: 0.06 }}
             className="rounded-3xl border border-[#1b2428]/15 bg-[#fffdfa]/85 p-5 shadow-[0_10px_24px_-18px_rgba(10,20,30,0.35)]"
           >
-            <h2 className="font-[Iowan_Old_Style,Palatino,serif] text-2xl">Data Input</h2>
+            <h2 className="font-[Iowan_Old_Style,Palatino,serif] text-2xl">{copy.dataInput}</h2>
 
             <div className="mt-4 flex flex-wrap gap-2">
-              <ModeButton active={mode === "grouped"} onClick={() => setMode("grouped")}>Grouped</ModeButton>
-              <ModeButton active={mode === "xy"} onClick={() => setMode("xy")}>XY</ModeButton>
+              <ModeButton active={mode === "grouped"} onClick={() => setMode("grouped")}>{copy.grouped}</ModeButton>
+              <ModeButton active={mode === "xy"} onClick={() => setMode("xy")}>{copy.xy}</ModeButton>
               <button
                 type="button"
-                onClick={() => setInput(mode === "grouped" ? sampleGrouped : sampleXY)}
+                onClick={() => setInput(mode === "grouped" ? copy.sampleGrouped : copy.sampleXY)}
                 className="rounded-full border border-[#1b2428]/20 px-3 py-1.5 text-sm hover:bg-[#f2ebe1]"
               >
-                Load Sample
+                {copy.loadSample}
               </button>
             </div>
 
@@ -244,31 +227,32 @@ export default function StatsLabPage({
                 onChange={(event) => setHasHeader(event.target.checked)}
                 className="size-4 accent-[#244a57]"
               />
-              First row is header
+              {copy.firstRowHeader}
             </label>
 
             <textarea
               value={input}
               onChange={(event) => setInput(event.target.value)}
               className="mt-4 h-[300px] w-full resize-y rounded-2xl border border-[#1b2428]/20 bg-[#fffefb] p-3 font-mono text-sm outline-none transition focus:border-[#224956] focus:ring-2 focus:ring-[#224956]/25"
-              placeholder={mode === "grouped" ? sampleGrouped : sampleXY}
+              placeholder={mode === "grouped" ? copy.sampleGrouped : copy.sampleXY}
             />
 
             {parsed ? (
               <div className="mt-3 rounded-xl bg-[#f6efe6] px-3 py-2 text-xs text-[#4a5a63]">
-                Parsed {parsed.rows.length} rows, {parsed.headers.length} columns ({delimiterName(parsed.delimiter)}).
+                {copy.parsed} {parsed.rows.length} {copy.rows}, {parsed.headers.length} {copy.columns} (
+                {delimiterName(parsed.delimiter, copy)}).
                 {parsed.warning ? ` ${parsed.warning}` : ""}
               </div>
             ) : (
               <div className="mt-3 rounded-xl bg-[#fef2f2] px-3 py-2 text-xs text-[#a13232]">
-                Could not parse this table.
+                {copy.parseFailed}
               </div>
             )}
 
             {mode === "xy" && parsed && parsed.headers.length >= 2 ? (
               <div className="mt-4 grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs uppercase tracking-[0.16em] text-[#5b6c74]">X Column</label>
+                  <label className="text-xs uppercase tracking-[0.16em] text-[#5b6c74]">{copy.xColumn}</label>
                   <select
                     value={xColumn}
                     onChange={(event) => setXColumn(Number(event.target.value))}
@@ -282,7 +266,7 @@ export default function StatsLabPage({
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs uppercase tracking-[0.16em] text-[#5b6c74]">Y Column</label>
+                  <label className="text-xs uppercase tracking-[0.16em] text-[#5b6c74]">{copy.yColumn}</label>
                   <select
                     value={yColumn}
                     onChange={(event) => setYColumn(Number(event.target.value))}
@@ -306,7 +290,7 @@ export default function StatsLabPage({
             className="rounded-3xl border border-[#1b2428]/15 bg-[#fffdfa]/85 p-5 shadow-[0_10px_24px_-18px_rgba(10,20,30,0.35)]"
           >
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <h2 className="font-[Iowan_Old_Style,Palatino,serif] text-2xl">Statistics + Charts</h2>
+              <h2 className="font-[Iowan_Old_Style,Palatino,serif] text-2xl">{copy.statsCharts}</h2>
               {mode === "grouped" ? (
                 <select
                   value={groupChart}
@@ -342,7 +326,7 @@ export default function StatsLabPage({
               <>
                 <div className="mt-4 overflow-hidden rounded-2xl border border-[#1b2428]/15 bg-white">
                   {mode === "grouped" ? (
-                    <GroupedChart groups={groupedData} summaries={groupSummaries} type={groupChart} />
+                    <GroupedChart groups={groupedData} summaries={groupSummaries} type={groupChart} valueLabel={copy.value} />
                   ) : (
                     <XYChart points={xyPoints} summary={xySummary} type={xyChart} />
                   )}
@@ -351,25 +335,25 @@ export default function StatsLabPage({
                 {mode === "grouped" ? (
                   <>
                     <div className="mt-5">
-                      <h3 className="font-semibold text-[#21343c]">Descriptive Statistics</h3>
-                      <StatsTable summaries={groupSummaries} />
+                      <h3 className="font-semibold text-[#21343c]">{copy.descriptiveStats}</h3>
+                      <StatsTable summaries={groupSummaries} copy={copy} />
                     </div>
 
                     <div className="mt-5 rounded-2xl border border-[#1b2428]/10 bg-[#f6efe5] p-4 text-sm text-[#2e4048]">
                       {welch ? (
                         <p>
-                          Welch t-test (two-tailed): t = <Stat>{formatNumber(welch.t)}</Stat>, df ={" "}
+                          {copy.welch}: t = <Stat>{formatNumber(welch.t)}</Stat>, df ={" "}
                           <Stat>{formatNumber(welch.df)}</Stat>, p = <Stat>{formatPValue(welch.p)}</Stat>
                         </p>
                       ) : null}
                       {anova ? (
                         <p>
-                          One-way ANOVA: F({anova.dfBetween}, {anova.dfWithin}) = <Stat>{formatNumber(anova.f)}</Stat>,
+                          {copy.oneWayAnova}: F({anova.dfBetween}, {anova.dfWithin}) = <Stat>{formatNumber(anova.f)}</Stat>,
                           p = <Stat>{formatPValue(anova.p)}</Stat>
                         </p>
                       ) : null}
                       {!welch && !anova ? (
-                        <p>Need at least 2 groups for inferential statistics.</p>
+                        <p>{copy.needGroups}</p>
                       ) : null}
                     </div>
                   </>
@@ -378,27 +362,27 @@ export default function StatsLabPage({
                     <div className="mt-5 overflow-x-auto rounded-2xl border border-[#1b2428]/10">
                       <table className="min-w-full divide-y divide-[#1b2428]/10 text-sm">
                         <tbody className="divide-y divide-[#1b2428]/10 bg-white">
-                          <KeyValueRow label="N pairs" value={String(xySummary.n)} />
-                          <KeyValueRow label="Mean X" value={formatNumber(xySummary.xMean)} />
-                          <KeyValueRow label="Mean Y" value={formatNumber(xySummary.yMean)} />
-                          <KeyValueRow label="SD X" value={formatNumber(xySummary.xSd)} />
-                          <KeyValueRow label="SD Y" value={formatNumber(xySummary.ySd)} />
-                          <KeyValueRow label="Pearson r" value={formatNumber(xySummary.r)} />
-                          <KeyValueRow label="R²" value={formatNumber(xySummary.rSquared)} />
+                          <KeyValueRow label={copy.nPairs} value={String(xySummary.n)} />
+                          <KeyValueRow label={copy.meanX} value={formatNumber(xySummary.xMean)} />
+                          <KeyValueRow label={copy.meanY} value={formatNumber(xySummary.yMean)} />
+                          <KeyValueRow label={copy.sdX} value={formatNumber(xySummary.xSd)} />
+                          <KeyValueRow label={copy.sdY} value={formatNumber(xySummary.ySd)} />
+                          <KeyValueRow label={copy.pearsonR} value={formatNumber(xySummary.r)} />
+                          <KeyValueRow label={copy.rSquared} value={formatNumber(xySummary.rSquared)} />
                           <KeyValueRow
-                            label="Linear fit"
+                            label={copy.linearFit}
                             value={`y = ${formatNumber(xySummary.slope)}x + ${formatNumber(xySummary.intercept)}`}
                           />
                           <KeyValueRow
-                            label="Correlation p"
-                            value={xySummary.pValue === null ? "Not enough points" : formatPValue(xySummary.pValue)}
+                            label={copy.correlationP}
+                            value={xySummary.pValue === null ? copy.notEnoughPoints : formatPValue(xySummary.pValue)}
                           />
                         </tbody>
                       </table>
                     </div>
 
                     <p className="mt-4 rounded-2xl border border-[#1b2428]/10 bg-[#f6efe5] px-4 py-3 text-sm text-[#2e4048]">
-                      Pearson correlation p-value is computed from the t statistic with df = n - 2.
+                      {copy.correlationHelp}
                     </p>
                   </>
                 )}
@@ -448,19 +432,25 @@ function KeyValueRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-function StatsTable({ summaries }: { summaries: GroupSummary[] }) {
+function StatsTable({
+  summaries,
+  copy,
+}: {
+  summaries: GroupSummary[];
+  copy: ReturnType<typeof getCopy>["statsTool"];
+}) {
   return (
     <div className="mt-2 overflow-x-auto rounded-2xl border border-[#1b2428]/10">
       <table className="min-w-full text-sm">
         <thead className="bg-[#f8f4ed] text-[#2b3f47]">
           <tr>
-            <th className="px-3 py-2 text-left font-semibold">Group</th>
-            <th className="px-3 py-2 text-right font-semibold">n</th>
-            <th className="px-3 py-2 text-right font-semibold">Mean</th>
-            <th className="px-3 py-2 text-right font-semibold">Median</th>
-            <th className="px-3 py-2 text-right font-semibold">SD</th>
-            <th className="px-3 py-2 text-right font-semibold">SEM</th>
-            <th className="px-3 py-2 text-right font-semibold">95% CI</th>
+            <th className="px-3 py-2 text-left font-semibold">{copy.group}</th>
+            <th className="px-3 py-2 text-right font-semibold">{copy.n}</th>
+            <th className="px-3 py-2 text-right font-semibold">{copy.mean}</th>
+            <th className="px-3 py-2 text-right font-semibold">{copy.median}</th>
+            <th className="px-3 py-2 text-right font-semibold">{copy.sd}</th>
+            <th className="px-3 py-2 text-right font-semibold">{copy.sem}</th>
+            <th className="px-3 py-2 text-right font-semibold">{copy.ci95}</th>
           </tr>
         </thead>
         <tbody>
@@ -487,10 +477,12 @@ function GroupedChart({
   groups,
   summaries,
   type,
+  valueLabel = "Value",
 }: {
   groups: GroupData[];
   summaries: GroupSummary[];
   type: GroupChartType;
+  valueLabel?: string;
 }) {
   const width = 920;
   const height = 380;
@@ -682,7 +674,7 @@ function GroupedChart({
       })}
 
       <text x={14} y={18} fontSize="12" fill="#42545c">
-        Value
+        {valueLabel}
       </text>
     </svg>
   );
@@ -777,7 +769,12 @@ function XYChart({ points, summary, type }: { points: XYPoint[]; summary: XYSumm
   );
 }
 
-function parseDelimitedTable(input: string, hasHeader: boolean): ParsedTable {
+function parseDelimitedTable(
+  input: string,
+  hasHeader: boolean,
+  columnLabel: string,
+  noDataRowsAfterHeader: string,
+): ParsedTable {
   const cleaned = input.replace(/\r/g, "").trim();
   if (!cleaned) {
     throw new Error("empty");
@@ -808,10 +805,10 @@ function parseDelimitedTable(input: string, hasHeader: boolean): ParsedTable {
   let rows: string[][];
 
   if (hasHeader) {
-    headers = padded[0].map((value, idx) => value.trim() || `Column ${idx + 1}`);
+    headers = padded[0].map((value, idx) => value.trim() || `${columnLabel} ${idx + 1}`);
     rows = padded.slice(1);
   } else {
-    headers = new Array(width).fill(0).map((_, idx) => `Column ${idx + 1}`);
+    headers = new Array(width).fill(0).map((_, idx) => `${columnLabel} ${idx + 1}`);
     rows = padded;
   }
 
@@ -819,7 +816,7 @@ function parseDelimitedTable(input: string, hasHeader: boolean): ParsedTable {
     headers,
     rows,
     delimiter,
-    warning: rows.length === 0 ? "No data rows after header." : undefined,
+    warning: rows.length === 0 ? noDataRowsAfterHeader : undefined,
   };
 }
 
@@ -1137,14 +1134,17 @@ function formatPValue(value: number): string {
   return value.toFixed(4);
 }
 
-function delimiterName(delimiter: string): string {
+function delimiterName(
+  delimiter: string,
+  copy: ReturnType<typeof getCopy>["statsTool"],
+): string {
   if (delimiter === "\t") {
-    return "tab";
+    return copy.delimiterTab;
   }
   if (delimiter === ",") {
-    return "comma";
+    return copy.delimiterComma;
   }
-  return "semicolon";
+  return copy.delimiterSemicolon;
 }
 
 function truncate(value: string, maxLength: number): string {
