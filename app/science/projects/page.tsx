@@ -1,39 +1,26 @@
-import Link from "next/link";
+"use client";
 
-const projects = [
-  {
-    href: "/science/projects/stats",
-    title: "Stats",
-    summary:
-      "A Prism-like analysis studio for quick grouped and XY plots, summary statistics, and common tests from pasted tables.",
-    status: "Live",
-    external: false,
-  },
-  {
-    href: "/science/projects/cloneflow",
-    title: "CloneFlow",
-    summary:
-      "A local-first molecular cloning planning app with config-driven workflow logic, kept in its own standalone repository.",
-    status: "External Repo",
-    external: false,
-  },
-];
+import Link from "next/link";
+import { useLanguage } from "@/app/components/language-provider";
+import { getCopy } from "@/app/lib/site-copy";
 
 export default function ProjectsPage() {
+  const { language } = useLanguage();
+  const copy = getCopy(language);
+
   return (
     <section className="space-y-8">
       <div>
-        <p className="text-xs uppercase tracking-[0.22em] text-neutral-500">Projects</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-neutral-900">Computational tools and side builds</h1>
+        <p className="text-xs uppercase tracking-[0.22em] text-neutral-500">{copy.projects.eyebrow}</p>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-neutral-900">{copy.projects.title}</h1>
         <p className="mt-3 max-w-3xl text-neutral-700 leading-relaxed">
-          Small, focused tools that support my research workflow and data analysis. Stats lives here as a project rather
-          than a top-level science section.
+          {copy.projects.intro}
         </p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        {projects.map((project) => (
-          <ProjectCard key={project.href} {...project} />
+        {copy.projects.items.map((project) => (
+          <ProjectCard key={project.href} openLabel={copy.projects.openProject} {...project} />
         ))}
       </div>
     </section>
@@ -45,12 +32,13 @@ function ProjectCard({
   title,
   summary,
   status,
+  openLabel,
 }: {
   href: string;
   title: string;
   summary: string;
   status: string;
-  external: boolean;
+  openLabel: string;
 }) {
   const className =
     "group rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg";
@@ -64,7 +52,7 @@ function ProjectCard({
         </span>
       </div>
       <p className="mt-4 text-sm leading-6 text-neutral-700">{summary}</p>
-      <p className="mt-5 text-sm font-medium text-neutral-900 group-hover:underline">Open project</p>
+      <p className="mt-5 text-sm font-medium text-neutral-900 group-hover:underline">{openLabel}</p>
     </>
   );
 

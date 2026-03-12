@@ -1,6 +1,9 @@
 // app/science/research/page.tsx
 "use client";
 
+import { useLanguage } from "@/app/components/language-provider";
+import { getCopy } from "@/app/lib/site-copy";
+
 function Card({ title, summary, href }: { title: string; summary: string; href?: string }) {
   return (
     <div className="shadow-sm border border-neutral-200 rounded-2xl p-5 bg-white hover:shadow-md transition-shadow">
@@ -17,26 +20,16 @@ function Card({ title, summary, href }: { title: string; summary: string; href?:
 }
 
 export default function Research() {
+  const { language } = useLanguage();
+  const copy = getCopy(language);
+
   return (
     <section id="research">
-      <h1 className="text-2xl font-semibold tracking-tight">Research</h1>
+      <h1 className="text-2xl font-semibold tracking-tight">{copy.research.title}</h1>
       <div className="mt-6 grid md:grid-cols-2 gap-6">
-        <Card
-          title="USP7 mutational landscape in GCB-DLBCL"
-          summary="Site-directed mutagenesis (Y243D, I660K, T730S, Y1056H), CRISPR perturbations, and structural modeling to understand PRC1.1 assembly & deubiquitinase activity."
-        />
-        <Card
-          title="PCGF1 overexpression & H2AK119ub dynamics"
-          summary="Functional genomics and CUT&Tag profiling to quantify Polycomb deposition and downstream effects."
-        />
-        <Card
-          title="GFI1-OE and BCR signaling (CD79b)"
-          summary="Global proteomics in HBL1; TF networks (LCK/LAT2) and potential BCAR1 cytosolic interactions."
-        />
-        <Card
-          title="Public re-analysis: BCOR/KDM2B peaks in LY1"
-          summary="ChIP-seq overlap & motif discovery (HOMER), excluding H3K27me3 to enrich for PRC1.1 candidates."
-        />
+        {copy.research.cards.map((card) => (
+          <Card key={card.title} title={card.title} summary={card.summary} />
+        ))}
       </div>
     </section>
   );

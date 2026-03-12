@@ -1,37 +1,14 @@
 // app/science/publications/page.tsx
 "use client";
 
-type Pub = {
-  year: number;
-  title: string;
-  venue?: string;
-  authors?: string;
-  href?: string;
-  note?: string;
-};
-
-const pubs: Pub[] = [
-  {
-    year: 2025,
-    title: "USP7 mutations rewire PRC1.1 activity in GCB-DLBCL",
-    note: "manuscript in preparation",
-  },
-  {
-    year: 2025,
-    title: "GFI1 overexpression modulates CD79b networks in HBL1",
-    note: "proteomics + validation — in prep",
-  },
-  {
-    year: 2024,
-    title: "Deciphering the oncogenic role of PRC1 complexes in DLBCL (PhD Thesis)",
-    venue: "University of Göttingen",
-    href: "#",
-  },
-];
+import { useLanguage } from "@/app/components/language-provider";
+import { getCopy } from "@/app/lib/site-copy";
 
 export default function Publications() {
+  const { language } = useLanguage();
+  const copy = getCopy(language);
   const byYear = new Map<number, Pub[]>();
-  pubs.forEach((p) => {
+  copy.publications.items.forEach((p) => {
     const arr = byYear.get(p.year) ?? [];
     arr.push(p);
     byYear.set(p.year, arr);
@@ -40,7 +17,7 @@ export default function Publications() {
 
   return (
     <section id="publications">
-      <h1 className="text-2xl font-semibold tracking-tight">Publications & manuscripts</h1>
+      <h1 className="text-2xl font-semibold tracking-tight">{copy.publications.title}</h1>
       <div className="mt-6 space-y-8">
         {sorted.map(([year, items]) => (
           <div key={year}>
@@ -56,7 +33,7 @@ export default function Publications() {
                     <>
                       {" "}
                       <a className="underline underline-offset-4" href={p.href} target="_blank">
-                        link
+                        {copy.publications.linkLabel}
                       </a>
                     </>
                   ) : null}
@@ -69,3 +46,12 @@ export default function Publications() {
     </section>
   );
 }
+
+type Pub = {
+  year: number;
+  title: string;
+  venue?: string;
+  authors?: string;
+  href?: string;
+  note?: string;
+};
