@@ -61,7 +61,6 @@ export default function PresentationsPage() {
     <section className="space-y-10" id="presentations">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">{copy.presentations.title}</h1>
-        <p className="mt-3 max-w-3xl text-neutral-700 leading-relaxed">{copy.presentations.intro}</p>
       </div>
 
       <div>
