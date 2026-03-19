@@ -14,6 +14,7 @@ export default function NavTabs() {
     { href: "/", label: copy.nav.about },
     { href: "/science/research", label: copy.nav.research },
     { href: "/science/publications", label: copy.nav.publications },
+    { href: "/science/presentations", label: copy.nav.presentations },
     { href: "/science/projects", label: copy.nav.projects },
   ];
 

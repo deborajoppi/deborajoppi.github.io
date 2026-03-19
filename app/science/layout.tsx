@@ -6,7 +6,7 @@ import ScienceShell from "@/app/components/science-shell";
 
 export const metadata: Metadata = {
   title: "Science — Débora Joppi",
-  description: "Research, publications, and teaching by Débora Joppi",
+  description: "Research, publications, conference output, and projects by Débora Joppi",
 };
 
 export default function ScienceLayout({ children }: { children: ReactNode }) {
